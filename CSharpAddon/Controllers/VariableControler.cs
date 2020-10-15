@@ -7,19 +7,20 @@ using System.Windows.Forms;
 namespace VoiceControl
 {
 
-    public class VariableController : ProtectInformationController, INamedCommandController
+    public class VariableController : ProtectInformationController, ICommandController
     {
-        public string Name => "variable";
+        public VariableController(IValueCollection globalState) : base(globalState)
+        {
+        }
 
-        public void Build(IBuilder builder)
+        public void Build(ICommandBuilder builder)
         {
 
             if (Information != null)
             {
                 foreach (var varname in Information.Variables/*.OrderBy(x=>x)*/)
                 {
-                    builder.Commands.AddCommand(varname, () => SendKeys.SendWait(varname));
-                    //Console.WriteLine(varname);
+                    builder.AddCommand(varname, () => SendKeys.SendWait(varname));
                 }
             }
         }

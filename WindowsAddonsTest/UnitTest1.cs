@@ -30,7 +30,7 @@ namespace WindowsAddonsTest
         [DataRow(" void TestMethod1(string test);", "TestMethod1")]
         [DataRow(" void TestMethod1(string test,int t);", "TestMethod1")]
         [DataRow(" void TestMethod1(List<string> test);", "TestMethod1")]
-        [DataRow("public void Build(IBuilder builder);", "Build")]
+        [DataRow("public void Build(ICommandBuilder builder);", "Build")]
         public void TestFunction(string input, string result)
         {
             Check(regex.FindFunctionDefinitions, input,new List<string> { result });

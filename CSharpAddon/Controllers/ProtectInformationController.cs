@@ -2,20 +2,20 @@
 
 namespace VoiceControl
 {
-    public abstract class ProtectInformationController:  IDoesChange, IUsesGlobalState
+    public abstract class ProtectInformationController:  IDoesChange
     {
-        IValueCollection globalState;
-        public IValueCollection GlobalState
-        {
-            get => globalState;
-            set { globalState = value; GlobalState.Changed += GlobalState_Changed; }
-        }
+        IValueCollection GlobalState;
+
 
         string currentPath;
-        ProjectInformation projectInformation;
+        private ProjectInformation projectInformation;
         public ProjectInformation Information => projectInformation;
 
-
+        public ProtectInformationController(IValueCollection globalState)
+        {
+            GlobalState = globalState;
+            GlobalState.Changed += GlobalState_Changed;
+        }
 
         public event Action<object> Changed;
         private void ProjectInformation_Changed()

@@ -2,18 +2,19 @@
 
 namespace VoiceControl
 {
-    public class GenericsController : ProtectInformationController, INamedCommandController
+    public class GenericsController : ProtectInformationController, ICommandController
     {
-        public string Name => "Generic";
-
-        public void Build(IBuilder builder)
+        public GenericsController(IValueCollection globalState) : base(globalState)
         {
-            builder.Settings.RepetitionCount = 10;
+        }
+
+        public void Build(ICommandBuilder builder)
+        {
             if (Information != null)
             {
                 foreach (var varname in Information.UsedGenerics/*.OrderBy(x=>x)*/)
                 {
-                    builder.Commands.AddCommand(varname, () => SendKeys.SendWait(varname));
+                    builder.AddCommand(varname, () => SendKeys.SendWait(varname));
                     //Console.WriteLine(varname);
                 }
             }
