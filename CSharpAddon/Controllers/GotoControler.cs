@@ -13,11 +13,13 @@ namespace VoiceControl
     {
         public GotoController(IValueCollection globalState) : base(globalState)
         {
+
         }
 
         public void Build(ICommandBuilder builder)
         {
             builder.AddCommand("line number()", (int v) => SendKeys.SendWait(@"^{t}:" + v + "{Enter}"));
+            if (Information == null) return;
             CreateCommandForEachEntry("file", builder, "^{t}f ", Information.FileNames, "{Enter}");
             CreateCommandForEachEntry("class", builder, "^{t}t ", Information.Classes, "{Enter}");
             CreateCommandForEachEntry("function", builder, "^{t}m ", Information.Functions, "{Enter}");
