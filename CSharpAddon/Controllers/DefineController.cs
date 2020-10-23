@@ -4,6 +4,7 @@ namespace VoiceControl
 {
     public class DefineController : ICommandController
     {
+      
         public void Build(ICommandBuilder builder)
         {
             builder.AddCommand("Small text(en-us)", v => SendKeys.SendWait(TextFomatter.FormatVariable(v)));
