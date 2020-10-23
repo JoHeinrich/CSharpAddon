@@ -10,7 +10,7 @@ namespace VoiceControl
         const string path = @"C:\Users\laise\Documents\Visual Studio Projects\VoiceControl";
         private static ProjectInformation active;
         static Dictionary<string, ProjectInformation> projectInformations = new Dictionary<string, ProjectInformation>();
-        public static  ProjectInformation Get (string path)
+        public static ProjectInformation Get(string path)
         {
             if (!projectInformations.ContainsKey(path))
             {
@@ -31,14 +31,14 @@ namespace VoiceControl
     {
         public event Action Changed;
 
-        public ProjectWatcher(IEnumerable <string >paths, string fileType)
+        public ProjectWatcher(IEnumerable<string> paths, string fileType)
         {
             foreach (var path in paths)
             {
-                ObservePath(path,  fileType); 
+                ObservePath(path, fileType);
             }
         }
-        public void ObservePath(string path,string fileType)
+        public void ObservePath(string path, string fileType)
         {
             FileSystemWatcher watcher = new FileSystemWatcher();
 
@@ -47,7 +47,7 @@ namespace VoiceControl
             watcher.Changed += Watcher_Changed;
             watcher.Created += Watcher_Changed;
             watcher.Deleted += Watcher_Changed;
-            watcher.Renamed+= Watcher_Changed;
+            watcher.Renamed += Watcher_Changed;
             watcher.EnableRaisingEvents = true;
         }
         private void Watcher_Changed(object sender, FileSystemEventArgs e)
@@ -168,19 +168,19 @@ namespace VoiceControl
             Files.ForEach(file =>
             {
                 var data = GetFileData(file);
-                if (data != null )found.AddRange(func(data));
+                if (data != null) found.AddRange(func(data));
             });
             return new HashSet<string>(found);
         }
-        public IEnumerable<string> Variables => ForEachFile(x=>x.DefinedVariables);
+        public IEnumerable<string> Variables => ForEachFile(x => x.DefinedVariables);
         public IEnumerable<string> Classes => ForEachFile(x => x.DefinedClasses);
         public IEnumerable<string> Functions => ForEachFile(x => x.DefinedFunctions);
         public IEnumerable<string> UsedTypes => ForEachFile(x => x.UsedTypes);
 
-        public IEnumerable<string> DefinedClasses { get; }
-        public IEnumerable<string> DefinedFunctions { get; }
-        public IEnumerable<string> DefinedVariables { get; }
-        public IEnumerable<string> UsedFunctions { get; }
+        public IEnumerable<string> DefinedClasses { get; } = new List<string>();
+        public IEnumerable<string> DefinedFunctions { get; } = new List<string>();
+        public IEnumerable<string> DefinedVariables { get; } = new List<string>();
+        public IEnumerable<string> UsedFunctions { get; } = new List<string>();
         public IEnumerable<string> UsedGenerics => ForEachFile(x => x.UsedGenerics);
         public IEnumerable<string> UsedMembers => ForEachFile(x => x.UsedMembers);
     }
