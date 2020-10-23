@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace VoiceControl
 {
 
-    public class MemberController : ProtectInformationController, ICommandController, IListController
+    public class MemberController : ProtectInformationController, ICommandController
     {
         public MemberController(IValueCollection globalState) : base(globalState)
         {
@@ -24,10 +24,6 @@ namespace VoiceControl
                 }
             }
         }
-        
-        public List<string> Build()
-        {
-            return Information.UsedMembers.ToList();
-        }
+
     }
 }
