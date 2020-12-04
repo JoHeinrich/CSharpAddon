@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>TestProgram</RootNamespace>
     <AssemblyName>TestProgram</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -45,8 +45,8 @@
     <Reference Include="VoiceControlCore">
       <HintPath>..\..\..\..\Visual Studio Projects\VoiceControl\VoiceControlCore\bin\Release\netstandard2.0\VoiceControlCore.dll</HintPath>
     </Reference>
-    <Reference Include="VoiceControlSDK">
-      <HintPath>..\..\..\..\Visual Studio Projects\VoiceControl\VoiceControlSDK\bin\Release\netstandard2.0\VoiceControlSDK.dll</HintPath>
+    <Reference Include="VoiceControlSDK, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\VoiceControlSDK.1.3.0\lib\netstandard2.0\VoiceControlSDK.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

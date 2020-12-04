@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using VoiceControl;
 
 using System.Threading;
+using CSharpAddon;
 
 namespace TestProgram
 {
@@ -14,11 +15,11 @@ namespace TestProgram
         static void Main(string[] args)
         {
             AppDomain.CurrentDomain.Load("CSharpAddon");
+            NotInPath.OpenDialog();
+            //var c=new ControllerTestProgram();
+            //InformationManager informationManager = new InformationManager(c.Values);
 
-            var c=new ControllerTestProgram();
-            InformationManager informationManager = new InformationManager(c.Values);
-
-            Console.WriteLine("Ready");
+            //Console.WriteLine("Ready");
             while (true) { Thread.Sleep(2000); }
             
         }
