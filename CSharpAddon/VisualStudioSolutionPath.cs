@@ -24,7 +24,7 @@ namespace CSharpAddon
                 {
                     Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Visual Studio Projects"),
                     paths.GetPath("Addons"),
-                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "source","repos")
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "source","repos")
                 };
             projectDirectories = settings.Create("SolutionDirectories", defaultprojectDirectories);
 
@@ -47,10 +47,17 @@ namespace CSharpAddon
                 var extension = "*.sln";
                 foreach (var path in settings.ProjectDirectories)
                 {
-                    foreach (var solutionPath in Directory.EnumerateFiles(path, extension, SearchOption.AllDirectories))
+                    if(Directory.Exists(path))
                     {
-                        var solutionName = Path.GetFileNameWithoutExtension(solutionPath);
-                        found[solutionName] = solutionPath;
+                        foreach (var solutionPath in Directory.EnumerateFiles(path, extension, SearchOption.AllDirectories))
+                        {
+                            var solutionName = Path.GetFileNameWithoutExtension(solutionPath);
+                            found[solutionName] = solutionPath;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Solutionsearch directory does not exist: "+path);
                     }
                 }
                 return found;

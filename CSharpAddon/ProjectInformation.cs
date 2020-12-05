@@ -29,7 +29,7 @@ namespace VoiceControl
     }
     public class ProjectWatcher
     {
-        public event Action Changed;
+        public event Action<string> Changed;
 
         public ProjectWatcher(IEnumerable<string> paths, string fileType)
         {
@@ -53,7 +53,7 @@ namespace VoiceControl
         private void Watcher_Changed(object sender, FileSystemEventArgs e)
         {
             Console.WriteLine(e.FullPath);
-            Changed?.Invoke();
+            Changed?.Invoke(e.FullPath);
         }
     }
     public class ProjectRegularExpressionInformation : IProjectInformation
@@ -67,7 +67,7 @@ namespace VoiceControl
         {
             this.path = Path.GetDirectoryName(path);
             projectWatcher = new ProjectWatcher(new HashSet<string>(Files.Select(x => Path.GetDirectoryName(x))), fileType);
-            projectWatcher.Changed += () => Changed?.Invoke();
+            projectWatcher.Changed += x => Changed?.Invoke();
 
 
         }
@@ -128,7 +128,7 @@ namespace VoiceControl
         {
             this.path = Path.GetDirectoryName(path);
             projectWatcher = new ProjectWatcher(new HashSet<string>(Files.Select(x => Path.GetDirectoryName(x))), fileType);
-            projectWatcher.Changed += () => Changed?.Invoke();
+            projectWatcher.Changed += x => { Invalidate(x); Changed?.Invoke(); };
 
 
         }
@@ -138,6 +138,17 @@ namespace VoiceControl
 
         public List<string> Files => Directory.EnumerateFiles(path, fileType, SearchOption.AllDirectories).Where(x => !(x.Contains("obj") || x.Contains(".vs"))).ToList();
         public List<string> FileNames => Files.Select(x => Path.GetFileNameWithoutExtension(x)).ToList();
+
+        public void Invalidate(string path)
+        {
+            lock (fileData)
+            {
+                if (fileData.ContainsKey(path))
+                {
+                    fileData.Remove(path);
+                }
+            }
+        }
         public IFileInformation GetFileData(string path)
         {
             lock (fileData)
