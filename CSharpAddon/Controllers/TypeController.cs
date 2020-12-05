@@ -11,7 +11,7 @@ namespace VoiceControl
         {
             defaultTypes = new List<string>
             {
-                "int","long","void","char","float","byte","bool","double","short","string"
+                "int","long","void","char","float","byte","bool","double","short","string","object"
             };
         }
         public void Build(IListBuilder builder)
@@ -33,6 +33,22 @@ namespace VoiceControl
         public void Build(ICommandBuilder builder)
         {
             builder.AddCommand("CSharpAddon.List.Types", x => SendKeys.SendWait(x));
+        }
+
+
+    }
+
+    public class NewController : ProtectInformationController, ICommandController
+    {
+        public NewController(IValueCollection globalState) : base(globalState)
+        {
+            List<string> sting = new List<string>();
+
+        }
+
+        public void Build(ICommandBuilder builder)
+        {
+            builder.AddCommand("CSharpAddon.List.Types", x => SendKeys.SendWait("new " +(string)x));
         }
 
 
