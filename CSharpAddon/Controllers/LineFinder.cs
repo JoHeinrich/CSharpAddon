@@ -97,5 +97,63 @@ namespace VoiceControl
             return false;
 
         }
+
+        string posMarker = "POSMARKER";
+        public void SetLineMarker()
+        {
+            SendKeys.SendWait("^+({Enter})" + posMarker);
+        }
+
+        public int FindLineMarker()
+        {
+            SendKeys.SendWait("^(a)^{c}{ESC}");
+            
+            string text = GetClipboard();
+            string[] lines = text.Split('\n');
+            int index = 0;
+            for (index = 0; index < lines.Length; index++)
+            {
+                if (lines[index].Contains(posMarker))
+                {
+                    return index + 1;
+                }
+            }
+            return -1;
+        }
+
+        public void JumpToLine(int line)
+        {
+            SendKeys.SendWait(@"^{t}:" + line + "{Enter}");
+            Thread.Sleep(500);
+        }
+
+        public void JumpToLineMarker()
+        {
+            int line = FindLineMarker();
+            if(line == -1)
+            {
+                Thread.Sleep(100);
+                line = FindLineMarker();
+            }
+            JumpToLine(line);
+            SendKeys.SendWait("^{l}");
+        }
+
+        public void DoInLine(int line,Action action)
+        {
+            SetLineMarker();
+            JumpToLine(line);
+            action();
+            JumpToLineMarker();
+        }
+
+        public void AddLineBelow(int line,string text)
+        {
+            DoInLine(line, () =>
+            {
+                SendKeys.SendWait("^+({Enter})");
+                SendKeys.SendWait(text);
+            });
+        }
     }
 }

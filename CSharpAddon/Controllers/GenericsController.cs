@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace VoiceControl
 {
-    public class GenericsController : ProtectInformationController, IListController
+    public class GenericsController : ProjectInformationController, IListController
     {
         public GenericsController(IValueCollection globalState) : base(globalState)
         {
@@ -17,7 +17,7 @@ namespace VoiceControl
         }
     }
 
-    public class GenericController : ProtectInformationController, ICommandController
+    public class GenericController : ProjectInformationController, ICommandController
     {
         public GenericController(IValueCollection globalState) : base(globalState)
         {
@@ -27,7 +27,6 @@ namespace VoiceControl
         {
             builder.AddCommand("<g,CSharpAddon.List.Generics>of<t,CSharpAddon.List.Types>", x => SendKeys.SendWait(x.Get(0) + "<" + x.Get(1) + ">"));
         }
-
 
     }
 }

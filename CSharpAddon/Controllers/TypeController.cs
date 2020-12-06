@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace VoiceControl
 {
-    public class TypesController : ProtectInformationController, IListController
+    public class TypesController : ProjectInformationController, IListController
     {
         List<string> defaultTypes;
         public TypesController(IValueCollection globalState) : base(globalState)
@@ -22,7 +22,7 @@ namespace VoiceControl
 
     }
 
-    public class TypeController : ProtectInformationController, ICommandController
+    public class TypeController : ProjectInformationController, ICommandController
     {
         public TypeController(IValueCollection globalState) : base(globalState)
         {
@@ -38,7 +38,7 @@ namespace VoiceControl
 
     }
 
-    public class NewController : ProtectInformationController, ICommandController
+    public class NewController : ProjectInformationController, ICommandController
     {
         public NewController(IValueCollection globalState) : base(globalState)
         {

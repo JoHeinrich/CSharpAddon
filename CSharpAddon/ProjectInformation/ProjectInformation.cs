@@ -64,7 +64,7 @@ namespace VoiceControl
         public HashSet<string> ForEachFile(Func<IFileInformation, IEnumerable<string>> func)
         {
             List<string> found = new List<string>();
-            AllFiles.ForEach(file =>
+            Files.ForEach(file =>
             {
                 var data = GetFileData(file);
                 if (data != null) found.AddRange(func(data));
@@ -82,5 +82,8 @@ namespace VoiceControl
         public IEnumerable<string> UsedFunctions { get; } = new List<string>();
         public IEnumerable<string> UsedGenerics => ForEachFile(x => x.UsedGenerics);
         public IEnumerable<string> UsedMembers => ForEachFile(x => x.UsedMembers);
+
+        public IEnumerable<string> UsedNamespaces => ForEachFile(x => x.UsedNamespaces);
+        public IEnumerable<string> UsedAttributes => ForEachFile(x => x.UsedAttributes);
     }
 }

@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 namespace VoiceControl
 {
 
-    public class GotoController : ProtectInformationController, ICommandController
+    public class GotoController : ProjectInformationController, ICommandController
     {
         public GotoController(IValueCollection globalState) : base(globalState)
         {

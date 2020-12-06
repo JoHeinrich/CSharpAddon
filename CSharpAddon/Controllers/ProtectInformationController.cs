@@ -2,7 +2,7 @@
 
 namespace VoiceControl
 {
-    public abstract class ProtectInformationController:  IDoesChange
+    public abstract class ProjectInformationController:  IDoesChange
     {
         IValueCollection GlobalState;
 
@@ -11,7 +11,7 @@ namespace VoiceControl
         private ProjectInformation projectInformation;
         public ProjectInformation Information => projectInformation;
 
-        public ProtectInformationController(IValueCollection globalState)
+        public ProjectInformationController(IValueCollection globalState)
         {
             GlobalState = globalState;
             GlobalState.Changed += GlobalState_Changed;

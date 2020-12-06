@@ -14,16 +14,18 @@ namespace VoiceControl
         {
             var word = FormatClass(input);
             return  word.Substring(0, 1).  ToLower() + word.Substring(1);
-
+        }
+        public static string FirstLetterSmall(string input)
+        {
+            return input.Substring(0, 1).ToLower() + input.Substring(1);
         }
         public static string FormatClass(String input)
         {
-            var cleand=Regex.Replace(input, @"(\.|\?|!|,)","");
-            var test = cleand.Split(' ');
+            var test = input.Split(' ').Select(x=>x.RemoveSpecialCharacters());
             var caseCorrected=String.Empty;
             foreach (var word in test)
             {
-                caseCorrected+= word.Substring(0, 1).ToUpper() + word.Substring(1).ToLower();
+                caseCorrected+= word.Substring(0, 1).ToUpper() + word.Substring(1);
             }
             return caseCorrected;
         }

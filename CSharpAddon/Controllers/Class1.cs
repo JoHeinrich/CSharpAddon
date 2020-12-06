@@ -7,11 +7,11 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 
-namespace SemanticsCS
+namespace CSharpAddon
 {
-    class Program
+    public class AnalyserTest
     {
-        static void Main(string[] args)
+        public static void Analyse()
         {
             var programText =
 @"using System;
@@ -33,6 +33,7 @@ namespace HelloWorld
 
             Console.WriteLine($"The tree is a {root.Kind()} node.");
             Console.WriteLine($"The tree has {root.Members.Count} elements in it.");
+
             Console.WriteLine($"The tree has {root.Usings.Count} using statements. They are:");
             foreach (UsingDirectiveSyntax element in root.Usings)
                 Console.WriteLine($"\t{element.Name}");

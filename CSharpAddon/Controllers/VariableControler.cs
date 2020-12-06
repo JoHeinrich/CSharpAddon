@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace VoiceControl
 {
 
-    public class VariableController : ProtectInformationController, ICommandController
+    public class VariableController : ProjectInformationController, ICommandController
     {
         public VariableController(IValueCollection globalState) : base(globalState)
         {

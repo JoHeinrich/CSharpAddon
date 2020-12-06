@@ -55,7 +55,7 @@ namespace VoiceControl
             return new HashSet<string>(found);
         }
         public IEnumerable<string> Variables => ForEachFile(regexForCSharp.FindVariables);
-        public IEnumerable<string> Classes => ForEachFile(regexForCSharp.FindClasseDefinitions);
+        public IEnumerable<string> Classes => ForEachFile(regexForCSharp.FindClassDefinitions);
         public IEnumerable<string> Functions => ForEachFile(regexForCSharp.FindFunctionDefinitions);
         public IEnumerable<string> UsedTypes => ForEachFile(regexForCSharp.FindUsedTypes);
 
@@ -65,5 +65,6 @@ namespace VoiceControl
         public IEnumerable<string> UsedFunctions { get; }
         public IEnumerable<string> UsedGenerics { get; }
         public IEnumerable<string> UsedMembers { get; }
+        public IEnumerable<string> UsedNamespaces { get; }
     }
 }

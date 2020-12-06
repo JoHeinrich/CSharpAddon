@@ -71,22 +71,45 @@ namespace VoiceControl
             return new List<string>(normalDefinition.Concat(funkDefinition));
         }
 
-        public List<string> FindClasseDefinitions(string input)
+        public List<string> FindAccessModifiable(string input)
+        {
+            List<string> found = FindClassDefinitions(input);
+            found.AddRange(AccessModifier(input));
+            found.AddRange(FindFunctionDefinitions(input));
+            return found;
+        }
+
+
+
+        public List<string> FindDefinitions(string input)
+        {
+            return Find(input, "(?:class|interface|structure|record) ([A-z0-9]+)").ToList();
+        }
+
+        public List<string> FindClassDefinitions(string input)
         {
             return Find(input, "class ([A-z0-9]+)").ToList();
         }
 
+        public List<string> FindInterfaceDefinitions(string input)
+        {
+            return Find(input, "interface ([A-z0-9]+)").ToList();
+        }
+
+        public List<string> FindStructureDefinitions(string input)
+        {
+            return Find(input, "interface ([A-z0-9]+)").ToList();
+        }
+
         public List<string> FindFunctionDefinitions(string input)
         {
-            //return Find(input, FunctionDefinition, MemberName).ToList();
             var unfiltered = Find(input, WhiteSpace+SpeciallWordRemover+TemplateType+WhiteSpace+MemberName+OptionalWhiteSpace+ArgumentStart,MemberName);
             return unfiltered/*.Where(x => !x.Contains("return")).Where(x => !x.Contains("new"))*/.ToList();
-            //"(?![a-zA-Z<>])+ ([a-z1-9]+) *\("
         }
 
         public List<string> AccessModifier(string input)
         {
-            return Find(input, "(public|private|protected) *").ToList();
+            return Find(input, "(public|private|protected|internal) *").ToList();
         }
     }
 }

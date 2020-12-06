@@ -83,21 +83,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoExecuter.cs" />
+    <Compile Include="Controllers\AccessModifiers.cs" />
+    <Compile Include="Controllers\AnnotateController.cs" />
+    <Compile Include="Controllers\AttributesController.cs" />
     <Compile Include="Controllers\Class1.cs" />
+    <Compile Include="Controllers\CombinationController.cs" />
     <Compile Include="Controllers\DefineController.cs" />
+    <Compile Include="Controllers\ExtendController.cs" />
     <Compile Include="Controllers\FindController.cs" />
     <Compile Include="Controllers\GenericsController.cs" />
     <Compile Include="Controllers\LineFinder.cs" />
     <Compile Include="Controllers\MakeController.cs" />
+    <Compile Include="Controllers\MembersController.cs" />
     <Compile Include="Controllers\ProtectInformationController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\UseController.cs" />
+    <Compile Include="Controllers\UsingsController.cs" />
     <Compile Include="FileMappingCreator.cs" />
     <Compile Include="Controllers\GotoControler.cs" />
     <Compile Include="Controllers\RegexForCSharp.cs" />
     <Compile Include="Controllers\TextFomatter.cs" />
     <Compile Include="Controllers\VariableControler.cs" />
     <Compile Include="InputSplitter.cs" />
+    <Compile Include="ProjectInformation\FileInformation.cs" />
+    <Compile Include="ProjectInformation\IFileInformation.cs" />
     <Compile Include="ProjectInformation\IProjectInformation.cs" />
     <Compile Include="ProjectInformation\ProjectInformation.cs" />
     <Compile Include="ProjectInformation\ProjectInformationManager.cs" />
