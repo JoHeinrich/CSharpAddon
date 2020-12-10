@@ -46,7 +46,15 @@ namespace VoiceControl
             DefinedFunctions = Consume(SyntaxKind.MethodDeclaration, SyntaxKind.ConstructorDeclaration);
             DefinedVariables = Consume(SyntaxKind.VariableDeclarator, SyntaxKind.Parameter, SyntaxKind.PropertyDeclaration, SyntaxKind.ForEachStatement, SyntaxKind.Argument, SyntaxKind.SimpleAssignmentExpression);
 
-            UsedTypes = Consume(SyntaxKind.ObjectCreationExpression, SyntaxKind.VariableDeclaration, SyntaxKind.SimpleBaseType, SyntaxKind.ClassDeclaration);
+            var nodes = root.DescendantNodes().Where(m => m.Kind() == SyntaxKind.Parameter);
+            var available = nodes.SelectMany(x =>
+            {
+                var children = x.ChildNodes();
+                if (children == null || children.FirstOrDefault() == null) return new List<SyntaxNode>();
+                return new List<SyntaxNode>{ children.First() };
+            });
+            UsedTypes = available.Select(x => x.ToString());
+            UsedTypes = UsedTypes.Concat(Consume(SyntaxKind.ObjectCreationExpression, SyntaxKind.VariableDeclaration, SyntaxKind.SimpleBaseType, SyntaxKind.ClassDeclaration));
             UsedFunctions = Consume(SyntaxKind.MethodDeclaration, SyntaxKind.ConstructorDeclaration,SyntaxKind.InvocationExpression, SyntaxKind.Parameter, SyntaxKind.PropertyDeclaration, SyntaxKind.ForEachStatement);
             UsedGenerics = Consume(SyntaxKind.GenericName);
 

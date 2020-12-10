@@ -14,6 +14,18 @@ namespace WindowsAddonsTest
 
             FileInformation information = new FileInformation(@"C:\Users\laise\Documents\EasyVoiceCode\Addons\CSharpAddon\CSharpAddon\ProjectInformation.cs");
         }
+
+
+        [TestMethod]
+        public void ParameterTypes()
+        {
+            FileInformation information = new FileInformation(@"C:\Users\laise\Documents\EasyVoiceCodeTest2\Addons\CSharpAddon\code\CSharpAddon\WindowsAddonsTest\TestFiles\ParameterTestClass.cs");
+            foreach (var item in information.UsedTypes)
+            {
+                Console.WriteLine(item);
+            }
+            Assert.IsTrue(information.UsedTypes.Contains("ParameterType"));
+        }
         [TestMethod]
         public void AtLeastRemainingIdentifiers()
         {
