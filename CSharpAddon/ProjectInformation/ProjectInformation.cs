@@ -2,6 +2,8 @@
 using System.Linq;
 using System.IO;
 using System;
+using System.Collections.Concurrent;
+using System.Threading.Tasks;
 
 namespace VoiceControl
 {
@@ -10,55 +12,52 @@ namespace VoiceControl
         private string path;
         const string fileType = "*.cs";
         RegexForCSharp regexForCSharp = new RegexForCSharp();
-        Dictionary<string, IFileInformation> fileData = new Dictionary<string, IFileInformation>();
+        ConcurrentDictionary<string, IFileInformation> fileData = new ConcurrentDictionary<string, IFileInformation>();
         ProjectWatcher projectWatcher;
         public ProjectInformation(string path)
         {
             this.path = Path.GetDirectoryName(path);
-            projectWatcher = new ProjectWatcher(new HashSet<string>(AllFiles.Select(x => Path.GetDirectoryName(x))), fileType);
-            projectWatcher.Changed += x => { Invalidate(x); Changed?.Invoke(); };
+            //projectWatcher = new ProjectWatcher(new HashSet<string>(AllFiles.Select(x => Path.GetDirectoryName(x))), fileType);
+            //projectWatcher.Changed += x => { LoadFile(x); Changed?.Invoke(); };
 
+            LoadFileData();
+            
 
+            
         }
-
+       
 
         public event Action Changed;
         public List<string> AllFiles => Directory.EnumerateFiles(path, fileType, SearchOption.AllDirectories).ToList();
-        public List<string> Files => AllFiles.Where(x => !(x.Contains("obj") || x.Contains(".vs"))).ToList();
+        public List<string> Files => AllFiles.Where(x => !(x.Contains("obj") || x.Contains(".vs") || x.Contains("Library"))).ToList();
         public List<string> FileNames => Files.Select(x => Path.GetFileNameWithoutExtension(x)).ToList();
 
-        public void Invalidate(string path)
+
+        public void LoadFile(string path)
         {
-            lock (fileData)
+            try
             {
-                if (fileData.ContainsKey(path))
-                {
-                    fileData.Remove(path);
-                }
+                fileData[path] = new FileInformation(path);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
+        public void LoadFileData()
+        {
+            foreach (var file in Files)
+            {
+                LoadFile(file);
+            }
+            Changed?.Invoke();
+        }
+
         public IFileInformation GetFileData(string path)
         {
-            lock (fileData)
-            {
-
-                if (fileData.TryGetValue(path, out IFileInformation value)) return value;
-                try
-                {
-                    string data = File.ReadAllText(path);
-                    IFileInformation fileInformation = new FileInformation(path);
-                    fileData[path] = fileInformation;
-                    return fileInformation;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Could not load file " + path);
-                    return null;
-                }
-
-            }
-
-
+            if (fileData.TryGetValue(path, out IFileInformation value))
+                return value;
+            return null;
         }
 
         public HashSet<string> ForEachFile(Func<IFileInformation, IEnumerable<string>> func)

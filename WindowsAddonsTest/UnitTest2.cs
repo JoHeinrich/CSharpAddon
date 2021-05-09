@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VoiceControl;
@@ -53,6 +54,19 @@ namespace WindowsAddonsTest
             {
                 Console.WriteLine(item);
             }
+        }
+
+        [TestMethod]
+        public void WriteProjectInformationToFile()
+        {
+
+            ProjectInformation information = new ProjectInformation(@"C:\Users\laise\Documents\EasyVoiceCode\Addons\CSharpAddon\CSharpAddon.sln");
+            string list = string.Join("\n", information.UsedMembers.Select(x=>x.ToLower()));
+            File.WriteAllText(@"C:\Users\laise\Desktop\members.txt",list);
+            //foreach (var item in information.Variables.OrderBy(x => x))
+            //{
+            //    Console.WriteLine(item);
+            //}
         }
     }
 }

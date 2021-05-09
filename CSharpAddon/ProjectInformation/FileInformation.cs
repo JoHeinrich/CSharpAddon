@@ -53,7 +53,7 @@ namespace VoiceControl
                 if (children == null || children.FirstOrDefault() == null) return new List<SyntaxNode>();
                 return new List<SyntaxNode>{ children.First() };
             });
-            UsedTypes = available.Select(x => x.ToString());
+            UsedTypes = available.Select(x => x.ToString().RemoveSpecialCharacters());
             UsedTypes = UsedTypes.Concat(Consume(SyntaxKind.ObjectCreationExpression, SyntaxKind.VariableDeclaration, SyntaxKind.SimpleBaseType, SyntaxKind.ClassDeclaration));
             UsedFunctions = Consume(SyntaxKind.MethodDeclaration, SyntaxKind.ConstructorDeclaration,SyntaxKind.InvocationExpression, SyntaxKind.Parameter, SyntaxKind.PropertyDeclaration, SyntaxKind.ForEachStatement);
             UsedGenerics = Consume(SyntaxKind.GenericName);

@@ -2,6 +2,8 @@
 using System.IO;
 using System;
 using VoiceControl;
+using System.Threading.Tasks;
+
 namespace VoiceControl
 {
     public class ProjectWatcher
@@ -30,8 +32,11 @@ namespace VoiceControl
         }
         private void Watcher_Changed(object sender, FileSystemEventArgs e)
         {
-            Console.WriteLine(e.FullPath);
-            Changed?.Invoke(e.FullPath);
+            Task.Run(() =>
+            {
+                Console.WriteLine(e.FullPath);
+                Changed?.Invoke(e.FullPath);
+            });
         }
     }
 }
