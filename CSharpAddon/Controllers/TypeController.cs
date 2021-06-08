@@ -19,9 +19,9 @@ namespace VoiceControl
             builder.Add(defaultTypes);
             builder.Add(Information?.UsedTypes);
         }
-
+       
     }
-
+   
     public class TypeController : ProjectInformationController, ICommandController
     {
         public TypeController(IValueCollection globalState) : base(globalState)
@@ -43,7 +43,7 @@ namespace VoiceControl
         public NewController(IValueCollection globalState) : base(globalState)
         {
             List<string> sting = new List<string>();
-
+            
         }
 
         public void Build(ICommandBuilder builder)
@@ -51,6 +51,6 @@ namespace VoiceControl
             builder.AddCommand("CSharpAddon.List.Types", x => SendKeys.SendWait("new " +(string)x));
         }
 
-
+       
     }
 }
